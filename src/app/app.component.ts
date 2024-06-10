@@ -1,15 +1,34 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {RouterLink, RouterOutlet} from '@angular/router';
 import {HeaderComponent} from "./shared/components/layout/header/header.component";
-import {RecipesComponent} from "./features/recipes/components/recipes/recipes.component";
-import {ShoppingListComponent} from "./features/shoppings/components/shopping-list/shopping-list.component";
+import {Subscription} from "rxjs";
+import {UserService} from "./features/user/services/user.service";
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, RecipesComponent, ShoppingListComponent],
+  imports: [RouterOutlet, HeaderComponent, RouterLink],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'angular-concepts';
+  userActivated: boolean = false;
+  private activatedSub!: Subscription;
+
+  constructor(private userService: UserService) {
+  }
+
+  ngOnInit() {
+    this.activatedSub = this.userService.activatedEmitter
+      .subscribe(
+        (didActivated) => {
+          this.userActivated = didActivated;
+        }
+      );
+  }
+
+  ngOnDestroy(): void {
+    this.activatedSub.unsubscribe();
+  }
 }
