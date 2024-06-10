@@ -1,34 +1,31 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {RouterLink, RouterOutlet} from '@angular/router';
 import {HeaderComponent} from "./shared/components/layout/header/header.component";
-import {Subscription} from "rxjs";
-import {UserService} from "./features/user/services/user.service";
+import {FormsModule, NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, RouterLink],
+  imports: [RouterOutlet, HeaderComponent, RouterLink, FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'angular-concepts';
-  userActivated: boolean = false;
-  private activatedSub!: Subscription;
+  submitted = false;
 
-  constructor(private userService: UserService) {
+  suggestUserName() {
+    const suggestedName = 'Superuser';
+  }
+
+  onSubmit(actorForm: NgForm) {
+    this.submitted = true;
+    console.log(actorForm.controls);
   }
 
   ngOnInit() {
-    this.activatedSub = this.userService.activatedEmitter
-      .subscribe(
-        (didActivated) => {
-          this.userActivated = didActivated;
-        }
-      );
   }
 
   ngOnDestroy(): void {
-    this.activatedSub.unsubscribe();
   }
 }
