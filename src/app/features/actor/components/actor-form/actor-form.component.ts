@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Actor} from "../../models/actor";
+import {Actor, GENDER, Gender} from "../../models/actor";
 import {FormsModule, NgForm, ReactiveFormsModule} from "@angular/forms";
 import {JsonPipe} from "@angular/common";
 
@@ -15,13 +15,28 @@ import {JsonPipe} from "@angular/common";
   styleUrl: './actor-form.component.css'
 })
 export class ActorFormComponent {
+  protected readonly GENDER = GENDER;
   skills = ['Method Acting', 'Singing', 'Dancing', 'Swordfighting'];
-  model = new Actor(18, 'Tom Cruise', this.skills[3], 'CW Productions');
+  actor = new Actor(18, 'Tom Cruise',this.skills[3], 'CW Productions');
+
+  genders: Gender[] = [Gender.male, Gender.female];
+
   submitted = false;
 
   onSubmit(actorForm: NgForm) {
     this.submitted = true;
+    console.log(actorForm.value);
     console.log(actorForm.controls);
-    console.log(this.model);
+    console.log(this.actor);
   }
+
+  suggestUserName() {
+    this.actor.name = 'Superuser';
+  }
+
+  reset(actorForm: NgForm) {
+    actorForm.reset()
+  }
+
+
 }
