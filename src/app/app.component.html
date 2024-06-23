@@ -19,7 +19,7 @@
   <div class="row">
     <h3>Heroes who fly (piped)</h3>
     <div id="flyers">
-      @for (hero of (heroes | flyingHeroes); track hero) {
+      @for (hero of (heroes | flyingHeroes ); track hero) {
         <div>{{ hero.name }}</div>
       }
     </div>
