@@ -1,12 +1,6 @@
-export enum Gender {
-  male = 1,
-  female = 2,
-}
+import {Gender} from "../../../shared/enums/gender.enum";
 
-export const GENDER = {
-  1: "male",
-  2: "female",
-}
+
 
 export class Actor {
   constructor(

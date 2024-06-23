@@ -1,0 +1,43 @@
+<section class="container">
+  <form (ngSubmit)="onSubmit()" [formGroup]="profileForm">
+    <label class="form-label" for="first-name">First Name: </label>
+    <input class="form-control" formControlName="firstName" id="first-name" type="text"><br>
+    <label class="form-label" for="last-name">Last Name: </label>
+    <input class="form-control" formControlName="lastName" id="last-name" type="text"><br>
+    @for (gender of genders; track gender) {
+      <div class="form-check">
+        <input class="form-check-input" formControlName="gender" type="radio" [value]="gender"
+               [id]="'flexRadioDefault' + gender">
+        <label class="form-check-label" [for]="'flexRadioDefault' + gender">
+          {{ GENDER[gender] }}
+        </label>
+      </div>
+    }
+    <div class="mt-3" formGroupName="address">
+      <h2>Address</h2>
+      <label class="form-label" for="street">Street: </label>
+      <input class="form-control" formControlName="street" id="street" type="text"><br>
+      <label class="form-label" for="city">City: </label>
+      <input class="form-control" formControlName="city" id="city" type="text"><br>
+      <label class="form-label" for="state">State: </label>
+      <input class="form-control" formControlName="state" id="state" type="text"><br>
+      <label class="form-label" for="zip">Zip Code: </label>
+      <input class="form-control" formControlName="zip" id="zip" type="text"><br>
+    </div>
+    <div class="mt-3" formArrayName="aliases">
+      <h2>Aliases</h2>
+      <button (click)="addAlias()" class="btn btn-info" type="button">+ Add another alias</button>
+      <br><br>
+      @for (alias of aliases.controls; track alias) {
+        <label class="form-label" for="alias-{{ $index }}">Alias:</label>
+        <input class="form-control" id="alias-{{ $index }}" type="text" [formControlName]="$index"><br>
+      }
+    </div>
+    <p>Form Status: {{ profileForm.status }}</p>
+    <button (click)="updateProfile()" class="btn btn-warning" type="button">Update Profile</button>
+    <br><br>
+    <p>Complete the form to enable button.</p>
+    <button [disabled]="!profileForm.valid" class="btn btn-success" type="submit">Submit</button>
+    <br><br>
+  </form>
+</section>
