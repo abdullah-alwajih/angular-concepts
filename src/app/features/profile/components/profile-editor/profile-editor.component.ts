@@ -31,9 +31,9 @@ export class ProfileEditorComponent {
       firstName: [null, Validators.required],
       lastName: [null],
       gender: [Gender.male],
-      address: this.formBuilder.group({
+      address: this.formBuilder.nonNullable.group({
         street: [null],
-        city: [null],
+        city: ['Riyadh'],
         state: [null],
         zip: [null],
       }),
@@ -58,9 +58,10 @@ export class ProfileEditorComponent {
     });
   }
 
+  resetForm = () => this.profileForm.reset();
+
   onSubmit() {
     // TODO: Use EventEmitter with form value
     console.log(this.profileForm.value);
   }
-
 }

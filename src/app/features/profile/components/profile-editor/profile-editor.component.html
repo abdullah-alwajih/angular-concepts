@@ -37,7 +37,8 @@
     <button (click)="updateProfile()" class="btn btn-warning" type="button">Update Profile</button>
     <br><br>
     <p>Complete the form to enable button.</p>
-    <button [disabled]="!profileForm.valid" class="btn btn-success" type="submit">Submit</button>
+    <button [disabled]="!profileForm.valid" class="btn btn-success  me-2" type="submit">Submit</button> &emsp;
+    <button (click)="resetForm()" class="btn btn-secondary" type="button">Reset</button>
     <br><br>
   </form>
 </section>
