@@ -1,7 +1,8 @@
 import {Component} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Gender, GENDER} from "../../../../shared/enums/gender.enum";
 import {forbiddenNameValidator} from "../../../../shared/validators/forbidden-name.directive";
+import {UniqueRoleValidator} from "../../../../shared/validators/role.directive";
 
 @Component({
   selector: 'app-profile-editor',
@@ -27,10 +28,16 @@ export class ProfileEditorComponent {
   genders: Gender[] = [Gender.male, Gender.female];
   protected readonly GENDER = GENDER;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private roleValidator: UniqueRoleValidator
+  ) {
     this.profileForm = this.formBuilder.group({
       firstName: [null, [Validators.required, forbiddenNameValidator(/bob/i)]],
-      lastName: [null, [forbiddenNameValidator(/bob/i)]],
+      lastName: new FormControl('', {
+        asyncValidators: [this.roleValidator.validate.bind(this.roleValidator)],
+        updateOn: 'blur',
+      }),
       gender: [Gender.male],
       address: this.formBuilder.nonNullable.group({
         street: [null],
