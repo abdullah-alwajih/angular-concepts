@@ -19,9 +19,15 @@
   <div class="row">
     <h3>Heroes who fly (piped)</h3>
     <div id="flyers">
-      @for (hero of (heroes | flyingHeroes ); track hero) {
+      @for (hero of (heroes | flyingHeroes); track hero) {
         <div>{{ hero.name }}</div>
       }
     </div>
+  </div>
+  <br><br>
+  <div class="row">
+    <h2>Async Messages and AsyncPipe</h2>
+    <p>{{ message$ | async }}</p>
+    <button (click)="resend()" type="button">Resend Messages</button>
   </div>
 </div>
