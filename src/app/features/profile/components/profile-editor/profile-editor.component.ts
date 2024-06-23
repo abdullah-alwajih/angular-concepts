@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Gender, GENDER} from "../../../../shared/enums/gender.enum";
+import {forbiddenNameValidator} from "../../../../shared/validators/forbidden-name.directive";
 
 @Component({
   selector: 'app-profile-editor',
@@ -28,8 +29,8 @@ export class ProfileEditorComponent {
 
   constructor(private formBuilder: FormBuilder) {
     this.profileForm = this.formBuilder.group({
-      firstName: [null, Validators.required],
-      lastName: [null],
+      firstName: [null, [Validators.required, forbiddenNameValidator(/bob/i)]],
+      lastName: [null, [forbiddenNameValidator(/bob/i)]],
       gender: [Gender.male],
       address: this.formBuilder.nonNullable.group({
         street: [null],
