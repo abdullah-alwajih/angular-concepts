@@ -2,6 +2,16 @@
   <form (ngSubmit)="onSubmit()" [formGroup]="profileForm">
     <label class="form-label" for="first-name">First Name: </label>
     <input class="form-control" formControlName="firstName" id="first-name" type="text"><br>
+    @if (profileForm.get('firstName')?.touched || profileForm.get('firstName')?.dirty) {
+      <span class="cross-validation-error-message alert">
+        @if (profileForm.get('firstName')?.hasError('forbiddenName')) {
+          {{ profileForm.get('firstName')?.errors?.['forbiddenName'].value }} Name is forbidden.
+        } @else if (profileForm.get('firstName')?.hasError('required')) {
+          Name is required
+        }
+      </span><br><br>
+    }
+
     <label class="form-label" for="last-name">Last Name: </label>
     <input class="form-control" formControlName="lastName" id="last-name" type="text"><br>
     @for (gender of genders; track gender) {
@@ -37,7 +47,7 @@
     <button (click)="updateProfile()" class="btn btn-warning" type="button">Update Profile</button>
     <br><br>
     <p>Complete the form to enable button.</p>
-    <button [disabled]="!profileForm.valid" class="btn btn-success me-2" type="submit">Submit</button> &emsp;
+    <button class="btn btn-success me-2" type="submit">Submit</button> &emsp;
     <button (click)="resetForm()" class="btn btn-secondary" type="button">Reset</button>
     <br><br>
   </form>

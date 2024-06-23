@@ -63,6 +63,6 @@ export class ProfileEditorComponent {
 
   onSubmit() {
     // TODO: Use EventEmitter with form value
-    console.log(this.profileForm.value);
+    console.log(this.profileForm);
   }
 }
