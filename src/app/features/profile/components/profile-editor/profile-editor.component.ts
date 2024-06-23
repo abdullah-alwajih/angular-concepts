@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Gender, GENDER} from "../../../../shared/enums/gender.enum";
 import {forbiddenNameValidator} from "../../../../shared/validators/forbidden-name.directive";
@@ -13,7 +13,7 @@ import {UniqueRoleValidator} from "../../../../shared/validators/role.directive"
   templateUrl: './profile-editor.component.html',
   styleUrl: './profile-editor.component.css'
 })
-export class ProfileEditorComponent {
+export class ProfileEditorComponent implements OnInit {
   // profileForm = new FormGroup({
   //   firstName: new FormControl(''),
   //   lastName: new FormControl(''),
@@ -55,6 +55,15 @@ export class ProfileEditorComponent {
 
   addAlias() {
     this.aliases.push(this.formBuilder.control(''));
+  }
+
+  ngOnInit() {
+    this.profileForm.get('firstName')?.valueChanges.subscribe(value => {
+      console.log(value);
+    })
+    this.profileForm.get('lastName')?.statusChanges.subscribe(value => {
+      console.log(value);
+    })
   }
 
   updateProfile() {
