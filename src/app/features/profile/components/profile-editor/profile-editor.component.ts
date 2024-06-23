@@ -64,6 +64,22 @@ export class ProfileEditorComponent implements OnInit {
     this.profileForm.get('lastName')?.statusChanges.subscribe(value => {
       console.log(value);
     })
+    this.profileForm.setValue({
+      firstName: 'Abdullah',
+      lastName: 'Al-Wajih',
+      gender: [Gender.male],
+      address: this.formBuilder.nonNullable.group({
+        street: [null],
+        city: ['Riyadh'],
+        state: [null],
+        zip: [null],
+      }),
+      aliases: this.formBuilder.array([this.formBuilder.control(null)]),
+    });
+
+    this.profileForm.patchValue({
+      firstName: 'Abdullah'
+    })
   }
 
   updateProfile() {
