@@ -4,11 +4,12 @@ import {HeaderComponent} from "./shared/components/layout/header/header.componen
 import {ActorFormComponent} from "./features/actor/components/actor-form/actor-form.component";
 import {ProfileEditorComponent} from "./features/profile/components/profile-editor/profile-editor.component";
 import {CurrencyPipe, DatePipe, DecimalPipe, NgClass, UpperCasePipe} from "@angular/common";
+import {ExponentialStrengthPipe} from "./shared/pipes/exponential-strength.pipe";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, RouterLink, ActorFormComponent, ProfileEditorComponent, NgClass, UpperCasePipe, DatePipe, CurrencyPipe, DecimalPipe],
+  imports: [RouterOutlet, HeaderComponent, RouterLink, ActorFormComponent, ProfileEditorComponent, NgClass, UpperCasePipe, DatePipe, CurrencyPipe, DecimalPipe, ExponentialStrengthPipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
