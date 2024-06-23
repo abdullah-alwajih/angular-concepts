@@ -1,6 +1,14 @@
-<main>
-<!--  <app-actor-form></app-actor-form>-->
-<app-profile-editor></app-profile-editor>
-
-
-</main>
+<div class="container ">
+  <div class="row">
+    <div class="col-12 col-sm-offset-1 col-md-offset-2">
+      <ul class="list-group">
+        @for (server of servers; track server.name) {
+          <li class="list-group-item" [ngClass]="getStatusClasses(server)">
+            <strong>{{ server.name }}</strong> | {{ server.instanceType | uppercase}} | {{ server.amount | number}}  | {{ server.started | date:'fullDate' | uppercase }}
+            <span class="badge text-bg-secondary">{{ server.status }}</span>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</div>

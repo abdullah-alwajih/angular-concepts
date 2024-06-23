@@ -2,33 +2,73 @@
 @import "bootstrap";
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
 
-body {
-    font-family: 'Cairo', sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Cairo', sans-serif;
+  line-height: 1.6;
+
+  box-sizing: border-box;
 }
 
-.ng-valid[required]:not( input[type="radio"]), .ng-valid.required:not( input[type="radio"])  {
+.full-height-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.container, .row {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.centered-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 856px; /* Maximum width */
+}
+
+
+.ng-valid[required]:not( input[type="radio"]), .ng-valid.required:not( input[type="radio"]) {
   border-left: 5px solid #42A948; /* green */
 }
-.ng-invalid:not(form, [ngModelGroup="userData"], input[type="radio"])  {
+
+.ng-invalid:not(form, [ngModelGroup="userData"], input[type="radio"]) {
   border-left: 5px solid #a94442; /* red */
 }
+
 .alert div {
   background-color: #fed3d3;
   color: #820000;
   padding: 1rem;
   margin-bottom: 1rem;
 }
+
 .form-group {
   margin-bottom: 1rem;
 }
+
 label {
   display: block;
   margin-bottom: .5rem;
 }
+
 select {
   width: 100%;
   padding: .5rem;
