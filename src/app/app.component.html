@@ -4,14 +4,24 @@
       <ul class="list-group">
         @for (server of servers; track server.name) {
           <li class="list-group-item" [ngClass]="getStatusClasses(server)">
-            <strong>{{ server.name }}</strong> | {{ server.instanceType | uppercase}} | {{ server.amount | number}}  | {{ server.started | date:'fullDate' | uppercase }}
+            <strong>{{ server.name }}</strong> | {{ server.instanceType | uppercase }} | {{ server.amount | number }}
+            | {{ server.started | date:'fullDate' | uppercase }}
             <span class="badge text-bg-secondary">{{ server.status }}</span>
           </li>
         }
       </ul>
       <span>
-        {{2 | exponentialStrength: 10}}
+        {{ 2 | exponentialStrength: 10 }}
       </span>
+    </div>
+  </div>
+  <br><br>
+  <div class="row">
+    <h3>Heroes who fly (piped)</h3>
+    <div id="flyers">
+      @for (hero of (heroes | flyingHeroes); track hero) {
+        <div>{{ hero.name }}</div>
+      }
     </div>
   </div>
 </div>

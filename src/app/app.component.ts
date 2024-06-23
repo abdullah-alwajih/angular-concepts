@@ -5,45 +5,20 @@ import {ActorFormComponent} from "./features/actor/components/actor-form/actor-f
 import {ProfileEditorComponent} from "./features/profile/components/profile-editor/profile-editor.component";
 import {CurrencyPipe, DatePipe, DecimalPipe, NgClass, UpperCasePipe} from "@angular/common";
 import {ExponentialStrengthPipe} from "./shared/pipes/exponential-strength.pipe";
+import {SERVERS} from "./shared/mocks/mock-servers";
+import {HEROES} from "./shared/mocks/mock-heroes";
+import {FlyingHeroesPipe} from "./shared/pipes/flying-heroes.pipe";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, RouterLink, ActorFormComponent, ProfileEditorComponent, NgClass, UpperCasePipe, DatePipe, CurrencyPipe, DecimalPipe, ExponentialStrengthPipe],
+  imports: [RouterOutlet, HeaderComponent, RouterLink, ActorFormComponent, ProfileEditorComponent, NgClass, UpperCasePipe, DatePipe, CurrencyPipe, DecimalPipe, ExponentialStrengthPipe, FlyingHeroesPipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  servers = [
-    {
-      instanceType: 'medium',
-      name: 'Production Server',
-      status: 'stable',
-      amount: 522451,
-      started: new Date(15, 1, 2017)
-    },
-    {
-      instanceType: 'large',
-      name: 'User Database',
-      status: 'stable',
-      amount: 522451,
-      started: new Date(15, 1, 2017)
-    },
-    {
-      instanceType: 'small',
-      name: 'Development Server',
-      status: 'offline',
-      amount: 522451,
-      started: new Date(15, 1, 2017)
-    },
-    {
-      instanceType: 'small',
-      name: 'Testing Environment Server',
-      status: 'stable',
-      amount: 522451,
-      started: new Date(15, 1, 2017)
-    }
-  ];
+  servers = SERVERS;
+  heroes = HEROES;
 
   getStatusClasses(server: { instanceType: string, name: string, status: string, started: Date }) {
     return {
