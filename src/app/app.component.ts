@@ -8,6 +8,16 @@ import {ExponentialStrengthPipe} from "./shared/pipes/exponential-strength.pipe"
 import {FlyingHeroesPipe} from "./shared/pipes/flying-heroes.pipe";
 import {HttpClient} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
+import {map} from "rxjs";
+
+interface Post {
+  title: string;
+  content: string;
+}
+
+type ResponseType = {
+  [key: string]: Post;
+};
 
 @Component({
   selector: 'app-root',
@@ -18,7 +28,8 @@ import {FormsModule} from "@angular/forms";
 })
 export class AppComponent {
   loadedPosts = [];
-  baseUrl = 'https://angular-concepts-1568a-default-rtdb.firebaseio.com'
+  baseUrl = 'https://angular-concepts-1568a-default-rtdb.firebaseio.com';
+  endPoint = `${this.baseUrl}/posts.json`;
 
   constructor(
     private http: HttpClient
@@ -31,13 +42,18 @@ export class AppComponent {
   onCreatePost(postData: { title: string; content: string }) {
     // Send Http request
     console.log(postData);
-    this.http.post(`${this.baseUrl}/posts.json`, postData).subscribe(value => {
+    this.http.post(this.endPoint, postData).subscribe(value => {
       console.log(value)
     });
   }
 
   onFetchPosts() {
-    // Send Http request
+    this.http.get<ResponseType>(this.endPoint)
+      .pipe(
+        map(response => Object.keys(response).map(key => ({...response[key], id: key})))
+      ).subscribe(response => {
+      console.log(response)
+    });
   }
 
   onClearPosts() {
