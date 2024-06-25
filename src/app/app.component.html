@@ -1,33 +1,57 @@
-<div class="container ">
+<div class="container">
   <div class="row">
-    <div class="col-12 col-sm-offset-1 col-md-offset-2">
-      <ul class="list-group">
-        @for (server of servers; track server.name) {
-          <li class="list-group-item" [ngClass]="getStatusClasses(server)">
-            <strong>{{ server.name }}</strong> | {{ server.instanceType | uppercase }} | {{ server.amount | number }}
-            | {{ server.started | date:'fullDate' | uppercase }}
-            <span class="badge text-bg-secondary">{{ server.status }}</span>
-          </li>
-        }
-      </ul>
-      <span>
-        {{ 2 | exponentialStrength: 10 }}
-      </span>
+    <div class="col-12 ">
+      <form #postForm="ngForm" (ngSubmit)="onCreatePost(postForm.value)">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input
+            class="form-control"
+            id="title"
+            name="title"
+            ngModel
+            required
+            type="text"
+          />
+        </div>
+        <div class="form-group">
+          <label for="content">Content</label>
+          <textarea
+            class="form-control"
+            id="content"
+            name="content"
+            ngModel
+            required
+          ></textarea>
+        </div>
+        <button
+          [disabled]="!postForm.valid"
+          class="btn btn-primary"
+          type="submit"
+        >
+          Send Post
+        </button>
+      </form>
     </div>
   </div>
-  <br><br>
+  <hr/>
   <div class="row">
-    <h3>Heroes who fly (piped)</h3>
-    <div id="flyers">
-      @for (hero of (heroes | flyingHeroes); track hero) {
-        <div>{{ hero.name }}</div>
-      }
+    <div class="col-12">
+      <button (click)="onFetchPosts()" class="btn btn-primary">
+        Fetch Posts
+      </button>
+      <span>&emsp; | &emsp;</span>
+      <button
+        (click)="onClearPosts()"
+        [disabled]="loadedPosts.length < 1"
+        class="btn btn-danger"
+      >
+        Clear Posts
+      </button>
     </div>
   </div>
-  <br><br>
   <div class="row">
-    <h2>Async Messages and AsyncPipe</h2>
-    <p>{{ message$ | async }}</p>
-    <button (click)="resend()" type="button">Resend Messages</button>
+    <div class="col-12">
+      <p>No posts available!</p>
+    </div>
   </div>
 </div>

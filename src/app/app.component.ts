@@ -5,45 +5,42 @@ import {ActorFormComponent} from "./features/actor/components/actor-form/actor-f
 import {ProfileEditorComponent} from "./features/profile/components/profile-editor/profile-editor.component";
 import {AsyncPipe, CurrencyPipe, DatePipe, DecimalPipe, NgClass, UpperCasePipe} from "@angular/common";
 import {ExponentialStrengthPipe} from "./shared/pipes/exponential-strength.pipe";
-import {SERVERS} from "./shared/mocks/mock-servers";
-import {HEROES} from "./shared/mocks/mock-heroes";
 import {FlyingHeroesPipe} from "./shared/pipes/flying-heroes.pipe";
-import {interval, map, Observable, startWith, take} from "rxjs";
+import {HttpClient} from "@angular/common/http";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, RouterLink, ActorFormComponent, ProfileEditorComponent, NgClass, UpperCasePipe, DatePipe, CurrencyPipe, DecimalPipe, ExponentialStrengthPipe, FlyingHeroesPipe, AsyncPipe],
+  imports: [RouterOutlet, HeaderComponent, RouterLink, ActorFormComponent, ProfileEditorComponent, NgClass, UpperCasePipe, DatePipe, CurrencyPipe, DecimalPipe, ExponentialStrengthPipe, FlyingHeroesPipe, AsyncPipe, FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  servers = SERVERS;
-  heroes = HEROES;
-  message$: Observable<string>;
-  private messages = ['You are my hero!', 'You are the best hero!', 'Will you be my hero?'];
+  loadedPosts = [];
+  baseUrl = 'https://angular-concepts-1568a-default-rtdb.firebaseio.com'
 
-  constructor() {
-    this.message$ = this.getResendObservable();
+  constructor(
+    private http: HttpClient
+  ) {
   }
 
-  resend() {
-    this.message$ = this.getResendObservable();
+  ngOnInit() {
   }
 
-  getStatusClasses(server: { instanceType: string, name: string, status: string, started: Date }) {
-    return {
-      'list-group-item-success': server.status === 'stable',
-      'list-group-item-warning': server.status === 'offline',
-      'list-group-item-danger': server.status === 'critical'
-    };
+  onCreatePost(postData: { title: string; content: string }) {
+    // Send Http request
+    console.log(postData);
+    this.http.post(`${this.baseUrl}/posts.json`, postData).subscribe(value => {
+      console.log(value)
+    });
   }
 
-  private getResendObservable() {
-    return interval(1000).pipe(
-      map((i) => `Message #${i + 1}: ${this.messages[i]}`),
-      take(this.messages.length),
-      startWith('Waiting for messages...'),
-    );
+  onFetchPosts() {
+    // Send Http request
+  }
+
+  onClearPosts() {
+    // Send Http request
   }
 }
