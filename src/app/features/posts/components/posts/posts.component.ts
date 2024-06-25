@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {FormsModule} from "@angular/forms";
-import {map} from "rxjs";
 import {IPost} from "../../models/posts.model";
 import {PostService} from "../../services/post.service";
 
@@ -15,6 +14,8 @@ import {PostService} from "../../services/post.service";
 })
 export class PostsComponent {
   posts: IPost[] = [];
+  isLoading = false;
+  errorMessage?: string;
 
   constructor(
     private postService: PostService
@@ -22,23 +23,34 @@ export class PostsComponent {
   }
 
   ngOnInit() {
+    this.onFetchPosts()
   }
 
   onCreatePost(postData: IPost) {
     // Send Http request
-    console.log(postData);
-    this.postService.create(postData).subscribe((response) => {
-      console.log(response)
+    this.isLoading = true;
+    this.postService.create(postData).subscribe({
+      next: response => console.log(response),
+      error: error => this.errorMessage = error.error.error,
+      complete: () => this.isLoading = false,
     })
   }
 
   onFetchPosts() {
-    this.postService.getList().pipe(
-      map(response => Object.keys(response).map(key => ({...response[key], id: key})))
-    ).subscribe(response => this.posts = response)
+    this.isLoading = true;
+    this.postService.getList().subscribe({
+      next: response => this.posts = response,
+      error: error => console.log(error),
+      complete: () => this.isLoading = false,
+    })
   }
 
   onClearPosts() {
     // Send Http request
+    this.postService.delete().subscribe({
+      next: _ => this.posts = [],
+      error: error => this.errorMessage = error.error.error,
+      complete: () => this.isLoading = false,
+    });
   }
 }

@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {IPost, ResponseType} from "../models/posts.model";
+import {map} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,19 @@ export class PostService {
   }
 
   getList() {
-    return this.http.get<ResponseType>(this.endPoint);
+    return this.http.get<ResponseType>(this.endPoint).pipe(
+      map(response => {
+        if (!response) return [];
+        return Object.keys(response).map(key => ({...response[key], id: key}));
+      }),
+    );
   }
 
   create(post: IPost) {
     return this.http.post(this.endPoint, post);
+  }
+
+  delete(id?: string) {
+    return this.http.delete(this.endPoint)
   }
 }
