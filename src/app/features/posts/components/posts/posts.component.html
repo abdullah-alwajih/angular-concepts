@@ -49,9 +49,19 @@
       </button>
     </div>
   </div>
+  <br><br>
   <div class="row">
     <div class="col-12">
-      <p>No posts available!</p>
+      <ul class="list-group">
+        @for (post of posts; track post.id) {
+          <li class="list-group-item">
+            <h3>{{ post.title }}</h3>
+            <p> {{ post.content }}</p>
+          </li>
+        } @empty {
+          <p>No posts available!</p>
+        }
+      </ul>
     </div>
   </div>
 </div>
