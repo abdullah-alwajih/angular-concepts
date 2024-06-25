@@ -9,54 +9,18 @@ import {FlyingHeroesPipe} from "./shared/pipes/flying-heroes.pipe";
 import {HttpClient} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import {map} from "rxjs";
+import {PostsComponent} from "./features/posts/components/posts/posts.component";
 
-interface Post {
-  title: string;
-  content: string;
-}
 
-type ResponseType = {
-  [key: string]: Post;
-};
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, RouterLink, ActorFormComponent, ProfileEditorComponent, NgClass, UpperCasePipe, DatePipe, CurrencyPipe, DecimalPipe, ExponentialStrengthPipe, FlyingHeroesPipe, AsyncPipe, FormsModule],
+  imports: [RouterOutlet, HeaderComponent, RouterLink, ActorFormComponent, ProfileEditorComponent, NgClass, UpperCasePipe, DatePipe, CurrencyPipe, DecimalPipe, ExponentialStrengthPipe, FlyingHeroesPipe, AsyncPipe, FormsModule, PostsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  loadedPosts = [];
-  baseUrl = 'https://angular-concepts-1568a-default-rtdb.firebaseio.com';
-  endPoint = `${this.baseUrl}/posts.json`;
+  title: string = 'Angular Concepts'
 
-  constructor(
-    private http: HttpClient
-  ) {
-  }
-
-  ngOnInit() {
-  }
-
-  onCreatePost(postData: { title: string; content: string }) {
-    // Send Http request
-    console.log(postData);
-    this.http.post(this.endPoint, postData).subscribe(value => {
-      console.log(value)
-    });
-  }
-
-  onFetchPosts() {
-    this.http.get<ResponseType>(this.endPoint)
-      .pipe(
-        map(response => Object.keys(response).map(key => ({...response[key], id: key})))
-      ).subscribe(response => {
-      console.log(response)
-    });
-  }
-
-  onClearPosts() {
-    // Send Http request
-  }
 }
