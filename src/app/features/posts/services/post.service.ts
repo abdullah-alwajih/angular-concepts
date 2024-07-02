@@ -54,14 +54,25 @@ export class PostService {
       tap((event) => {
         // console.log(data);
         switch (event.type) {
-          case HttpEventType.Response: console.log(event.body); break;
-          case HttpEventType.DownloadProgress: console.log(event.type); break;
-          case HttpEventType.ResponseHeader: console.log(event.status); break;
-          case HttpEventType.Sent: console.log(event.type); break;
-          case HttpEventType.UploadProgress: console.log(event.type); break;
-          case HttpEventType.User: console.log(event.type); break;
+          case HttpEventType.Response:
+            console.log(event.body);
+            break;
+          case HttpEventType.DownloadProgress:
+            console.log(event.type);
+            break;
+          case HttpEventType.ResponseHeader:
+            console.log(event.status);
+            break;
+          case HttpEventType.Sent:
+            console.log(event.type);
+            break;
+          case HttpEventType.UploadProgress:
+            console.log(event.type);
+            break;
+          case HttpEventType.User:
+            console.log(event.type);
+            break;
         }
-
       })
     )
   }
