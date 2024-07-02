@@ -49,7 +49,8 @@ export class PostService {
 
   delete(id?: string) {
     return this.http.delete(this.endPoint, {
-      observe: 'events'
+      observe: 'events',
+      responseType: 'text'
     }).pipe(
       tap((event) => {
         // console.log(data);
