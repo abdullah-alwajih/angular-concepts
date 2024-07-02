@@ -14,7 +14,7 @@ import {Subscription} from "rxjs";
   styleUrl: './posts.component.css'
 })
 export class PostsComponent implements OnInit, OnDestroy {
-  posts: IPost[] = [];
+  posts: IPost[]  = [];
   isLoading = false;
   errorMessage?: string;
   private errorSub?: Subscription
@@ -42,8 +42,8 @@ export class PostsComponent implements OnInit, OnDestroy {
   onFetchPosts() {
     this.isLoading = true;
     this.postService.getList().subscribe({
-      next: response => this.posts = response,
-      error: error => console.log(error),
+      next: response => this.posts = response ,
+      error: error => this.errorMessage = error,
       complete: () => this.isLoading = false,
     })
   }

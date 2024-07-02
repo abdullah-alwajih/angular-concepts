@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {IPost, ResponseType} from "../models/posts.model";
-import {map, Subject} from "rxjs";
+import {catchError, map, Subject, throwError} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +20,9 @@ export class PostService {
         if (!response) return [];
         return Object.keys(response).map(key => ({...response[key], id: key}));
       }),
+      catchError(error => {
+          throw  error.error.error
+      })
     );
   }
 
