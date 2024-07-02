@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {IPost, ResponseType} from "../models/posts.model";
-import {catchError, map, Subject, throwError} from "rxjs";
+import {catchError, map, Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -15,19 +15,26 @@ export class PostService {
   }
 
   getList() {
-    return this.http.get<ResponseType>(this.endPoint).pipe(
+    return this.http.get<ResponseType>(
+      this.endPoint,
+      {
+        headers: new HttpHeaders({
+          'Custom-Header': 'Hello World !'
+        })
+      }
+    ).pipe(
       map(response => {
         if (!response) return [];
         return Object.keys(response).map(key => ({...response[key], id: key}));
       }),
       catchError(error => {
-          throw  error.error.error
+        throw error.error.error
       })
     );
   }
 
   create(post: IPost) {
-     this.http.post(this.endPoint, post).subscribe({
+    this.http.post(this.endPoint, post).subscribe({
       next: response => console.log(response),
       error: error => this.error.next(error.error.error),
     });
