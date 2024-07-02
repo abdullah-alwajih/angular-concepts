@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {IPost, ResponseType} from "../models/posts.model";
-import {map} from "rxjs";
+import {map, Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +9,7 @@ import {map} from "rxjs";
 export class PostService {
   baseUrl = 'https://angular-concepts-1568a-default-rtdb.firebaseio.com';
   endPoint = `${this.baseUrl}/posts.json`;
+  error = new Subject<string>();
 
   constructor(private http: HttpClient) {
   }
@@ -23,7 +24,10 @@ export class PostService {
   }
 
   create(post: IPost) {
-    return this.http.post(this.endPoint, post);
+     this.http.post(this.endPoint, post).subscribe({
+      next: response => console.log(response),
+      error: error => this.error.next(error.error.error),
+    });
   }
 
   delete(id?: string) {
