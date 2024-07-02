@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {IPost, ResponseType} from "../models/posts.model";
 import {catchError, map, Subject} from "rxjs";
 
@@ -15,12 +15,16 @@ export class PostService {
   }
 
   getList() {
-    return this.http.get<ResponseType>(
-      this.endPoint,
-      {
-        headers: new HttpHeaders({
-          'Custom-Header': 'Hello World !'
-        })
+    const headers = new HttpHeaders();
+    headers.append('Custom-Header', 'Hello World !')
+
+    const params = new HttpParams();
+    params.append('print', 'pretty');
+    params.append('custom', 'key');
+
+    return this.http.get<ResponseType>(this.endPoint, {
+        headers: headers,
+        params: params
       }
     ).pipe(
       map(response => {
