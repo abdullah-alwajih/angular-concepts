@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpEventType, HttpHeaders, HttpParams} from "@angular/common/http";
 import {IPost, ResponseType} from "../models/posts.model";
-import {catchError, map, Subject} from "rxjs";
+import {catchError, map, Subject, tap} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -38,13 +38,31 @@ export class PostService {
   }
 
   create(post: IPost) {
-    this.http.post(this.endPoint, post).subscribe({
+    this.http.post(this.endPoint, post, {
+        observe: 'response'
+      }
+    ).subscribe({
       next: response => console.log(response),
       error: error => this.error.next(error.error.error),
     });
   }
 
   delete(id?: string) {
-    return this.http.delete(this.endPoint)
+    return this.http.delete(this.endPoint, {
+      observe: 'events'
+    }).pipe(
+      tap((event) => {
+        // console.log(data);
+        switch (event.type) {
+          case HttpEventType.Response: console.log(event.body); break;
+          case HttpEventType.DownloadProgress: console.log(event.type); break;
+          case HttpEventType.ResponseHeader: console.log(event.status); break;
+          case HttpEventType.Sent: console.log(event.type); break;
+          case HttpEventType.UploadProgress: console.log(event.type); break;
+          case HttpEventType.User: console.log(event.type); break;
+        }
+
+      })
+    )
   }
 }
