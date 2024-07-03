@@ -10,13 +10,14 @@ import {HttpClient} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import {map} from "rxjs";
 import {PostsComponent} from "./features/posts/components/posts/posts.component";
+import {CourseListComponent} from "./features/courses/components/course-list/course-list.component";
 
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, RouterLink, ActorFormComponent, ProfileEditorComponent, NgClass, UpperCasePipe, DatePipe, CurrencyPipe, DecimalPipe, ExponentialStrengthPipe, FlyingHeroesPipe, AsyncPipe, FormsModule, PostsComponent],
+  imports: [RouterOutlet, HeaderComponent, RouterLink, ActorFormComponent, ProfileEditorComponent, NgClass, UpperCasePipe, DatePipe, CurrencyPipe, DecimalPipe, ExponentialStrengthPipe, FlyingHeroesPipe, AsyncPipe, FormsModule, PostsComponent, CourseListComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
