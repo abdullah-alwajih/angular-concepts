@@ -8,9 +8,9 @@ import {CourseService} from "../../services/course.service";
   imports: [],
   templateUrl: './course-card.component.html',
   styleUrl: './course-card.component.css',
-    providers: [
-    CourseService
-  ]
+  // providers: [
+  //   CourseService
+  // ] // not needed because the service is already injected in the component course list
 })
 export class CourseCardComponent implements OnInit {
   @Input() course: ICourse = {} as ICourse;

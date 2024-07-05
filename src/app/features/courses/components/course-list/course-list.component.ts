@@ -13,9 +13,9 @@ import {CourseImageComponent} from "../course-image/course-image.component";
   ],
   templateUrl: './course-list.component.html',
   styleUrl: './course-list.component.css',
-  // providers: [
-  //   CourseService
-  // ] // not needed because the service is already injected in the component course list
+  providers: [
+    CourseService
+  ]
 })
 export class CourseListComponent {
   courses: ICourse[] = COURSES;
