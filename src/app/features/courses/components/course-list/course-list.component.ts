@@ -12,7 +12,10 @@ import {CourseImageComponent} from "../course-image/course-image.component";
     CourseImageComponent
   ],
   templateUrl: './course-list.component.html',
-  styleUrl: './course-list.component.css'
+  styleUrl: './course-list.component.css',
+  // providers: [
+  //   CourseService
+  // ] // not needed because the service is already injected in the component course list
 })
 export class CourseListComponent {
   courses: ICourse[] = COURSES;
@@ -30,6 +33,7 @@ export class CourseListComponent {
     //const htmlElement = createCustomElement(CourseTitleComponent, {injector:this.injector});
 
     //customElements.define('course-title', htmlElement);
+    console.log("CourseService course list " + this.courseService.id);
 
   }
 

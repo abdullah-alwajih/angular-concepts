@@ -1,4 +1,4 @@
-import {Attribute, Component, EventEmitter, Input, Output} from '@angular/core';
+import {Attribute, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ICourse} from "../../models/course.model";
 import {CourseService} from "../../services/course.service";
 
@@ -7,9 +7,12 @@ import {CourseService} from "../../services/course.service";
   standalone: true,
   imports: [],
   templateUrl: './course-card.component.html',
-  styleUrl: './course-card.component.css'
+  styleUrl: './course-card.component.css',
+    providers: [
+    CourseService
+  ]
 })
-export class CourseCardComponent {
+export class CourseCardComponent implements OnInit {
   @Input() course: ICourse = {} as ICourse;
   @Input() cardIndex?: number;
   @Output('courseChanged') courseEmitter = new EventEmitter<ICourse>();
@@ -22,7 +25,7 @@ export class CourseCardComponent {
   }
 
   ngOnInit() {
-
+    console.log("CourseService course card " + this.courseService.id);
 
   }
 
